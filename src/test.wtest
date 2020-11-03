@@ -1,3 +1,60 @@
 import comidas.*
 import comensales.*
 import cocina.*
+
+test "parrillada"{
+	var par1=new Parrillada()
+	var asado1=new Corte(calidad=2,peso=800)
+	var vacio1=new Corte(calidad=3,peso=1200)
+	var matambre1= new Corte(calidad=1,peso=1350)
+	par1.agregarCortesDeCarne(asado1)
+	par1.agregarCortesDeCarne(vacio1)
+	par1.agregarCortesDeCarne(matambre1)
+	assert.equals(3350,par1.peso())
+	assert.equals(42,par1.valoracion())
+	
+}
+test "comidas"{
+	var hamb1= new HamburguesaDeCarne(panSeteado=panCasero)
+	assert.equals(hamb1.valoracion(),80)
+	var hambV1=new HamburguesaVegetariana(panSeteado=panDeMasaMadre,legumbreDeLaQueEstaHecha="garbanzos")
+	assert.equals(hambV1.valoracion(),122)
+	var prov1=new Provoleta(peso=190,tieneEspecias=true)
+	assert.equals(prov1.esEspecial(),true)
+	var par2=new Parrillada()
+	var asado2=new Corte(calidad=10,peso=250)
+	var entrania=new Corte(calidad=7,peso=200)
+	var chorizo=new Corte(calidad=8,peso=50)
+	par2.agregarCortesDeCarne(asado2)
+	par2.agregarCortesDeCarne(entrania)
+	par2.agregarCortesDeCarne(chorizo)
+	assert.equals(par2.valoracion(),147)
+}
+
+
+test "comensales"{
+	var veg1=new Vegetariano(peso=68500)
+	var prov2=new Provoleta(peso=190,tieneEspecias=true)
+	veg1.comer(prov2)
+	var hambv2=new HamburguesaVegetariana(panSeteado=panDeMasaMadre,legumbreDeLaQueEstaHecha="garbanzos")
+	var hambv3=new HamburguesaVegetariana(panSeteado=panDeMasaMadre,legumbreDeLaQueEstaHecha="garbanzos")
+	veg1.comer(hambv2)
+	veg1.comer(hambv3)
+	assert.equals(veg1.satisfecho(),true)
+	var popu=new HambrePopular(peso=85000)
+	var par3=new Parrillada()
+	var asado3=new Corte(calidad=10,peso=250)
+	var entrania2=new Corte(calidad=7,peso=200)
+	var chorizo2=new Corte(calidad=8,peso=50)
+	par3.agregarCortesDeCarne(asado3)
+	par3.agregarCortesDeCarne(entrania2)
+	par3.agregarCortesDeCarne(chorizo2)
+	popu.comer(par3)
+	assert.equals(popu.satisfecho(),false)
+	var fino=new DePaladarFino()
+	var hambM=new HamburguesaDeCarne(panSeteado=panDeMasaMadre)
+	var hambC=new HamburguesaDeCarne(panSeteado=panCasero)
+	assert.equals(fino.leAgrada(hambM),true)
+	assert.equals(fino.leAgrada(hambC),false)
+	
+}
